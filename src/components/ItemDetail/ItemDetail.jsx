@@ -8,13 +8,10 @@ import { Link } from "react-router-dom"
 import { DataContext } from '../Context/CartContext'
 
 
+const ItemDetails = ({id, stock, image,description,title,price, item} ) => {
 
-
-
-const ItemDetails = ({id, stock, image,description,title,price,item}) => {
-
-    const {addItemToCart} = useContext(DataContext)
-    
+    const cartContext = useContext(DataContext) // si desestructuro se me rompe el itemdetail ver por que
+    console.log('carritoContext-itemDetail', cartContext);
 
     const [productAdded, setproductAdded] = useState(0);
     const [stockProduct, setStockProduct] = useState(5);
@@ -22,8 +19,8 @@ const ItemDetails = ({id, stock, image,description,title,price,item}) => {
     const onAddFunction = (quantityToAdd)=>{
         setproductAdded(quantityToAdd)
         setStockProduct(stockProduct - quantityToAdd);
-        //cartContext.addItemToCart(item, quantityToAdd);
-        addItemToCart(item,quantityToAdd)
+        cartContext.addItemToCart(item, quantityToAdd);
+        
     }
 
     
@@ -67,7 +64,7 @@ const ItemDetails = ({id, stock, image,description,title,price,item}) => {
                                         }
                                          {
                                             productAdded>0 &&
-                                            <Link to="/" className="mb-3" >
+                                            <Link to="/" className="m-3" >
                                             <button className='btn-warning'>Regresar al listado</button>
                                              </Link>
                                         }

@@ -2,10 +2,9 @@ import React from 'react'
 import {useEffect, useState} from "react"
 import ItemListCards from '../ItemListCard/ItemListCards'
 import {pedirDatos} from "../../data/pedirDatos"
+import { db } from '../../helpers/Firebase'
 import { useParams } from 'react-router'
-
-
-
+import { collection, getDocs, docs } from 'firebase/firestore';
 
 const ItemList = () => {
 
@@ -15,38 +14,65 @@ const ItemList = () => {
     const {categoryId} =useParams()
     console.log(categoryId)
 
-    useEffect(() => {
-        setLoading(true)
-        pedirDatos()
-                .then((res)=>{
+  
+        
+        
+        useEffect(() => {
+            getData()
+            
+             
+         }, [])
+
+         
+
+         const getData = async ()=>{
+            //referencia a la base de datos
+         const query = collection(db, "items")
+
+         //obtener documento dentro de la coleccion items
+         const response = await getDocs(query)
+         console.log("respuesta", response.docs)
+         console.log("info", docs)
+         // const newDoc ={
+         //     id: doc.id,
+         //     data:doc.data()
+         // }
+         const dataItems = response.docs.map(doc=>{return{id:doc.id, ...doc.data()}})
+         console.log("data item", dataItems)
+          setProduct(dataItems)
+        }
+        getData()
+
+
+
+        // pedirDatos()
+        //         .then((res)=>{
                     
                     
-                    const productsSelling = res.map(producto=>{
-                        return{
-                               id:producto.id,
-                               title:producto.title,
-                               price:producto.price,
-                               description:producto.description,
-                               image:producto.image,
-                               category:producto.category
-                               }
+        //             const productsSelling = res.map(producto=>{
+        //                 return{
+        //                        id:producto.id,
+        //                        title:producto.title,
+        //                        price:producto.price,
+        //                        description:producto.description,
+        //                        image:producto.image,
+        //                        category:producto.category
+        //                        }
                    
-                    })
-                    if(!categoryId){
-                        setProduct(productsSelling)
-                        setLoading(false)
-                    }else{
-                        setProduct(productsSelling.filter((prod)=>prod.category === categoryId))
-                        setLoading(false)
-                    }
+        //             })
+        //             if(!categoryId){
+        //                 setProduct(productsSelling)
+        //                 setLoading(false)
+        //             }else{
+        //                 setProduct(productsSelling.filter((prod)=>prod.category === categoryId))
+        //                 setLoading(false)
+        //             }
                     
 
-                })
-                .catch((error)=>{
-                    console.log(error)
-                })      
-
-    },[categoryId])
+              
+                  
+    //},[])
+   // },[categoryId])
 
 
     return (

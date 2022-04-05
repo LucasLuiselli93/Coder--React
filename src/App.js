@@ -15,7 +15,7 @@ import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailCont
 
 
 import FirebaseComponent from './components/FirebaseComponent/FirebaseComponent';
-import {  DataContext } from './components/Context/CartContext';
+import {  DataContext,CartContext } from './components/Context/CartContext';
 
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import {useEffect} from "react";
-import {collection, doc, getDocs} from "firebase/firestore"
+import { collection, getDocs, docs } from 'firebase/firestore';
 import {db} from "../../helpers/Firebase"
 
 
@@ -12,9 +12,12 @@ const FirebaseComponent = () => {
 
     useEffect(() => {
        const getData = async ()=>{
+           //referencia a la base de datos
         const query = collection(db, "items")
+        //obtener documento dentro de la coleccion items
         const response = await getDocs(query)
-        console.log("respuesta", response)
+        console.log("respuesta", response.docs)
+        console.log("info", docs)
         // const newDoc ={
         //     id: doc.id,
         //     data:doc.data()
